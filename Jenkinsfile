@@ -13,5 +13,11 @@ pipeline {
                 sh 'mvn clean install'
             }
         }
+        stage('Docker Build') {
+            agent any
+            steps {
+                sh 'docker build -t juanma313/spring-petclinic:gestion-udem-jenkins .'
+            }
+        }
     }
 }
