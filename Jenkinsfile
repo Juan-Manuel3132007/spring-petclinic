@@ -19,5 +19,14 @@ pipeline {
                 sh 'docker build -t juanma313/spring-petclinic:gestion-udem-jenkins .'
             }
         }
+        stage('Docker Push') {
+            agent any
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+                    sh 'echo $dockerHubPassword | docker login -u $dockerHubUser --password-stdin'
+                    sh 'docker push juanma313/spring-petclinic:gestion-udem-jenkins'
+                }
+            }
+        }
     }
 }
